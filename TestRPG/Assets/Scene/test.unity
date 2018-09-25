@@ -245,10 +245,6 @@ Animator:
   m_PrefabParentObject: {fileID: 9500000, guid: 73445d541ca27524a8ebb40f3e950ea0,
     type: 3}
   m_PrefabInternal: {fileID: 1013444475}
---- !u!4 &1677959023 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 400074, guid: 73445d541ca27524a8ebb40f3e950ea0, type: 3}
-  m_PrefabInternal: {fileID: 1013444475}
 --- !u!114 &1677959024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,7 +354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &1979546275
 AudioListener:
   m_ObjectHideFlags: 0
@@ -419,8 +415,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 2.5, z: 3.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1677959023}
-  m_RootOrder: 5
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 15.000001, y: 180.00002, z: 0}
 --- !u!1001 &2066655850
 Prefab:
@@ -460,6 +456,10 @@ Prefab:
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 2}
