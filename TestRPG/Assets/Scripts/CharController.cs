@@ -20,7 +20,7 @@ public class CharController : MonoBehaviour
 
     void Start()
     {
-        this.animator = GetComponent<Animator>() as Animator;
+        this.animator = GetComponentInChildren<Animator>() as Animator;
     }
 
 
