@@ -67,14 +67,16 @@ public class IKHandle : MonoBehaviour
     {
         leftFootWeight = anim.GetFloat("LeftFoot");
         rightFootWeight = anim.GetFloat("RightFoot");
+
         anim.SetIKPositionWeight(AvatarIKGoal.LeftFoot, leftFootWeight);
         anim.SetIKPositionWeight(AvatarIKGoal.RightFoot, rightFootWeight);
-        anim.SetIKPosition(AvatarIKGoal.LeftFoot, leftFootPosition +
-        new Vector3(0f, offsetY, 0f));
-        anim.SetIKPosition(AvatarIKGoal.RightFoot, rightFootPosition +
-        new Vector3(0f, offsetY, 0f));
+
+        anim.SetIKPosition(AvatarIKGoal.LeftFoot, leftFootPosition + new Vector3(0f, offsetY, 0f));
+        anim.SetIKPosition(AvatarIKGoal.RightFoot, rightFootPosition + new Vector3(0f, offsetY, 0f));
+
         anim.SetIKRotationWeight(AvatarIKGoal.LeftFoot, leftFootWeight);
         anim.SetIKRotationWeight(AvatarIKGoal.RightFoot, rightFootWeight);
+
         anim.SetIKRotation(AvatarIKGoal.LeftFoot, leftFootRotation);
         anim.SetIKRotation(AvatarIKGoal.RightFoot, rightFootRotation);
     }

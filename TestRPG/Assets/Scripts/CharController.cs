@@ -16,11 +16,14 @@ public class CharController : MonoBehaviour
     public bool die = false;
 
     private Vector3 moveDirection = Vector3.zero;
+    private Rigidbody rigidbody;
+
 
 
     void Start()
     {
         this.animator = GetComponentInChildren<Animator>() as Animator;
+        this.rigidbody = GetComponent<Rigidbody>();
     }
 
 
@@ -29,49 +32,50 @@ public class CharController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             this.attack1 = true;
-            this.GetComponent<IKHandle>().enabled = false;
+            //this.GetComponent<IKHandle>().enabled = false;
         }
         else if (Input.GetKeyUp(KeyCode.C))
         {
             this.attack1 = false;
-            this.GetComponent<IKHandle>().enabled = true;
+            //this.GetComponent<IKHandle>().enabled = true;
         }
         animator.SetBool("Attack1", attack1);
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
             this.attack2 = true;
-            this.GetComponent<IKHandle>().enabled = false;
+            //this.GetComponent<IKHandle>().enabled = false;
         }
         else if (Input.GetKeyUp(KeyCode.Z))
         {
             this.attack2 = false;
-            this.GetComponent<IKHandle>().enabled = true;
+            //this.GetComponent<IKHandle>().enabled = true;
         }
         animator.SetBool("Attack2", attack2);
 
         if (Input.GetKeyDown(KeyCode.X))
         {
             this.attack3 = true;
-            this.GetComponent<IKHandle>().enabled = false;
+            //this.GetComponent<IKHandle>().enabled = false;
         }
         else if (Input.GetKeyUp(KeyCode.X))
         {
             this.attack3 = false;
-            this.GetComponent<IKHandle>().enabled = true;
+            //this.GetComponent<IKHandle>().enabled = true;
         }
         animator.SetBool("Attack3", attack3);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             this.jump = true;
-            this.GetComponent<IKHandle>().enabled = false;
+            //this.GetComponent<IKHandle>().enabled = false;
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
             this.jump = false;
-            this.GetComponent<IKHandle>().enabled = true;
+            //this.GetComponent<IKHandle>().enabled = true;
         }
+
         animator.SetBool("Jump", jump);
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -100,6 +104,9 @@ public class CharController : MonoBehaviour
         animator.SetFloat("Speed", speed);
         animator.SetFloat("Horizontal", h);
         animator.SetFloat("Vertical", v);
+
+        
     }
+
 
 }
