@@ -10,12 +10,36 @@ public class CopyRotation : MonoBehaviour {
     public bool copyY;
     public bool copyZ;
 
+    public UpdateType updateType = UpdateType.FixedUpdate;
+
     private Vector3 newRotation;
 
-
-	void Update ()
+    void Update()
     {
+        if (updateType == UpdateType.Update)
+        {
+            UpdateRotation();
+        }
+    }
 
+    void FixedUpdate()
+    {
+        if (updateType == UpdateType.FixedUpdate)
+        {
+            UpdateRotation();
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (updateType == UpdateType.LateUpdate)
+        {
+            UpdateRotation();
+        }
+    }
+
+    void UpdateRotation()
+    {
         newRotation = transform.rotation.eulerAngles;
 
         if (copyX)
@@ -34,6 +58,12 @@ public class CopyRotation : MonoBehaviour {
         }
 
         transform.rotation = Quaternion.Euler(newRotation);
-
     }
+}
+
+public enum UpdateType
+{
+    Update,
+    FixedUpdate,
+    LateUpdate
 }

@@ -4,63 +4,86 @@ using UnityEngine;
 
 public class ShootArrow : MonoBehaviour {
 
-    public GameObject arrow;
+    public GameObject arrowPrefab;
     public LayerMask layerMask;
 
     public Vector3 aimingPoint;
 
-    bool ready = false;
-    Vector3 start;
-    Vector3 direction;
+    public float arrowSpeed = 1f;
+
+    public Transform arrowSpawnner;
+    public Transform characterModel;
+    
+
+    public bool changeRotation = false;
+
+    bool _ready = false;
+    Vector3 _start;
+    Vector3 _direction;
 
     RaycastHit hit;
 	
 	void Update ()
     {
-        start = Camera.main.transform.position;
-        direction = Camera.main.transform.forward;
+        _start = Camera.main.transform.position;
+        _direction = Camera.main.transform.forward;
 
-        if (Input.GetButton("Fire1"))
+        CastRay();
+
+        if (Input.GetButtonDown("Fire1"))
         {
-            Aim();
-            
+            Shoot();            
         }
-        else if (ready && Input.GetButtonUp("Fire1"))
+        
+    }
+
+    void LateUpdate()
+    {
+        LookAtPoint();
+    }
+    
+
+    void CastRay()
+    {
+        if (Physics.Raycast(_start, _direction, out hit, Mathf.Infinity, layerMask))
         {
-            Shoot();
+            Debug.DrawRay(_start, _direction * hit.distance, Color.green);
+            aimingPoint = hit.point;
+            _ready = true;
+        }
+        else
+        {
+            Debug.DrawRay(_start, _direction * 1000, Color.red);
+            aimingPoint = _start + (_direction * 1000);
+            _ready = false;
         }
     }
 
     void Aim()
     {
-        if (Physics.Raycast(start, direction, out hit, Mathf.Infinity, layerMask))
-        {
-            Debug.DrawRay(start, direction * hit.distance, Color.green);
-            aimingPoint = hit.point;
-            ready = true;
-        }
-        else
-        {
-            Debug.DrawRay(start, direction * 1000, Color.red);
-
-            ready = false;
-        }
-
-        ready = true;
+        
     }
 
     void Shoot()
-    {      
+    {
+        var arrow = (GameObject)Instantiate(arrowPrefab, arrowSpawnner.position, arrowSpawnner.rotation);
+        var projectile = arrow.GetComponent<Projectile>();
 
-        if (Physics.Raycast(start, direction, out hit, Mathf.Infinity, layerMask))
-        {
-            Debug.DrawRay(start, direction * hit.distance, Color.yellow);
-            aimingPoint = hit.point;
+        projectile.speed = arrowSpeed;
+        projectile.targetPoint = aimingPoint;
+
+        if (!_ready)
+        {         
+            projectile.falling = true;
         }
-        else
+
+    }
+
+    void LookAtPoint()
+    {
+        if (changeRotation)
         {
-
+            characterModel.LookAt(aimingPoint);
         }
-
     }
 }
