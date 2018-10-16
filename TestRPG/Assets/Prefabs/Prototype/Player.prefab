@@ -2401,12 +2401,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95672595573503516}
-  speed: 6
+  speed: 8
+  flightSpeed: 10
   jumpSpeed: 10
   layerMaskFloor:
     serializedVersion: 2
     m_Bits: 4294967295
   grounded: 0
+  canFly: 1
+  isFlying: 0
 --- !u!114 &114341003312086398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2423,6 +2426,9 @@ MonoBehaviour:
   vertical: 0
   horizontal: 0
   jump: 0
+  jump_Down: 0
+  run: 0
+  goDown: 0
 --- !u!114 &114404437867402600
 MonoBehaviour:
   m_ObjectHideFlags: 1
