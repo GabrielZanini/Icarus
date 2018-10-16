@@ -22,12 +22,11 @@ public class PlayerInput : MonoBehaviour {
     {
         fire = Input.GetButtonDown("Fire1");
         aiming = Input.GetButton("Fire2");
-
         vertical = Input.GetAxis("Vertical");
         horizontal = Input.GetAxis("Horizontal");
         jump = Input.GetButton("Jump");
         jump_Down = Input.GetButtonDown("Jump");
         goDown = Input.GetButton("GoDown");
-
+        run = Input.GetButton("Run");
     }
 }

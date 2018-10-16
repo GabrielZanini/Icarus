@@ -14,8 +14,11 @@ public class ShootArrow : MonoBehaviour {
     public Transform archer;
     public Transform arrowSpawnner;
     public Transform bow;
-    
 
+
+
+    public bool canShoot = true;
+    public bool isAiming = false;
     public bool changeRotation = false;
 
 
@@ -38,8 +41,9 @@ public class ShootArrow : MonoBehaviour {
 
         CastRay();
 
-        if (input.aiming)
+        if (input.aiming && canShoot)
         {
+            isAiming = true;
             archer.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
             if (input.fire)
@@ -49,13 +53,9 @@ public class ShootArrow : MonoBehaviour {
         }
         else
         {
+            isAiming = false;
             archer.localRotation = Quaternion.Euler(0f, 0f, 0f);
-
-        }
-
-
-       
-        
+        }        
     }
 
     void LateUpdate()

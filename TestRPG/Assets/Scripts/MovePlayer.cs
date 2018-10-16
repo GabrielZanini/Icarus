@@ -8,27 +8,29 @@ public class MovePlayer : MonoBehaviour {
 
     public float speed = 2f;
     public float flightSpeed = 2f;
+    public float fastFlightSpeed = 2f;
     public float jumpSpeed = 2f;
 
     public LayerMask layerMaskFloor;
-
-
 
     public bool grounded = false;
 
     public bool canFly = false;
 
     public bool isFlying = false;
+    public bool isFlyingFast = false;
 
     PlayerInput input;
 
     Rigidbody rigidbody;
     RaycastHit hitGround;
+    ShootArrow shootArrow;
 
     void Start ()
     {
         input = GetComponent<PlayerInput>();
         rigidbody = GetComponent<Rigidbody>();
+        shootArrow = GetComponent<ShootArrow>();
     }
 	
 	void Update ()
@@ -40,11 +42,26 @@ public class MovePlayer : MonoBehaviour {
 
     private void LateUpdate()
     {
-        if (isFlying)
+        if (isFlyingFast)
+        {
+            if (!input.run || grounded)
+            {
+                ExitFastFlightMode();
+            }
+            else
+            {
+                transform.LookAt(shootArrow.aimingPoint);
+            }
+        }
+        else if (isFlying)
         {
             if (grounded)
             {
                 ExitFlightMode();
+            }
+            else if (input.run)
+            {
+                EnterFastFlightMode();
             }
         }
         else
@@ -64,19 +81,27 @@ public class MovePlayer : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        Move();
-
-        if (isFlying)
+        if (isFlyingFast)
         {
-            if (input.jump)
+            FlightFast();
+        }
+        else
+        {
+            Move();
+
+            if (isFlying)
             {
-                GoUp();
-            }
-            else if (input.goDown)
-            {
-                GoDown();
+                if (input.jump)
+                {
+                    GoUp();
+                }
+                else if (input.goDown)
+                {
+                    GoDown();
+                }
             }
         }
+        
     }
 
     private void EnterFlightMode()
@@ -93,9 +118,35 @@ public class MovePlayer : MonoBehaviour {
         rigidbody.useGravity = true;
     }
 
+
+
+    private void EnterFastFlightMode()
+    {
+        isFlyingFast = true;
+        shootArrow.canShoot = false;
+    }
+
+    private void ExitFastFlightMode()
+    {
+        isFlyingFast = false;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        shootArrow.canShoot = true;
+
+        if (grounded)
+        {
+            ExitFlightMode();
+        }
+    }
+
+
     void Move()
     {
         transform.Translate(new Vector3(input.horizontal, 0, input.vertical) * speed * Time.fixedDeltaTime);
+    }
+
+    void FlightFast()
+    {
+        transform.Translate(Vector3.forward * fastFlightSpeed * Time.fixedDeltaTime);
     }
 
     void Jump()
@@ -129,7 +180,9 @@ public class MovePlayer : MonoBehaviour {
 
     void Animate()
     {
-        animator.SetBool("Aiming", input.aiming);
+        animator.SetBool("Aiming", shootArrow.isAiming);
+        animator.SetBool("Grounded", grounded);
+        animator.SetBool("FlyingFast", isFlyingFast);
         animator.SetFloat("Horizontal", input.horizontal);
         animator.SetFloat("Vertical", input.vertical);
     }
