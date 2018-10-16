@@ -11,29 +11,50 @@ public class ShootArrow : MonoBehaviour {
 
     public float arrowSpeed = 1f;
 
+    public Transform archer;
     public Transform arrowSpawnner;
-    public Transform characterModel;
+    public Transform bow;
     
 
     public bool changeRotation = false;
 
+
+    PlayerInput input;
     bool _ready = false;
     Vector3 _start;
     Vector3 _direction;
 
     RaycastHit hit;
-	
-	void Update ()
+
+    private void Start()
+    {
+        input = GetComponent<PlayerInput>();
+    }
+
+    void Update ()
     {
         _start = Camera.main.transform.position;
         _direction = Camera.main.transform.forward;
 
         CastRay();
 
-        if (Input.GetButtonDown("Fire1"))
+        if (input.aiming)
         {
-            Shoot();            
+            archer.localRotation = Quaternion.Euler(0f, 90f, 0f);
+
+            if (input.fire)
+            {
+                Shoot();
+            }
         }
+        else
+        {
+            archer.localRotation = Quaternion.Euler(0f, 0f, 0f);
+
+        }
+
+
+       
         
     }
 
@@ -83,7 +104,7 @@ public class ShootArrow : MonoBehaviour {
     {
         if (changeRotation)
         {
-            characterModel.LookAt(aimingPoint);
+            bow.LookAt(aimingPoint);
         }
     }
 }
