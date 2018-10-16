@@ -22,7 +22,7 @@ public class ShootArrow : MonoBehaviour {
     public bool changeRotation = false;
 
 
-    PlayerInput input;
+    PlayerInput _input;
     bool _ready = false;
     Vector3 _start;
     Vector3 _direction;
@@ -31,7 +31,7 @@ public class ShootArrow : MonoBehaviour {
 
     private void Start()
     {
-        input = GetComponent<PlayerInput>();
+        _input = GetComponent<PlayerInput>();
     }
 
     void Update ()
@@ -41,12 +41,12 @@ public class ShootArrow : MonoBehaviour {
 
         CastRay();
 
-        if (input.aiming && canShoot)
+        if (_input.aiming && canShoot)
         {
             isAiming = true;
             archer.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            if (input.fire)
+            if (_input.fire)
             {
                 Shoot();
             }

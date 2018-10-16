@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     public bool falling = false;
 
     Rigidbody _rigidbody;
+    bool _stop = false;
 
     void Start()
     {
@@ -41,7 +42,7 @@ public class Projectile : MonoBehaviour
 
     void MoveToTarget()
     {
-        if ((transform.position - targetPoint).sqrMagnitude > 0.3f)
+        if ((transform.position - targetPoint).sqrMagnitude > 0.3f && !_stop)
         {
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
@@ -54,6 +55,20 @@ public class Projectile : MonoBehaviour
             _rigidbody.useGravity = false;
             _rigidbody.velocity = Vector3.zero;
             falling = false;
+        }
+
+        _stop = true;
+
+        if (other.tag == "Enemy")
+        {
+            Monoeye mono = other.gameObject.GetComponent<Monoeye>();
+
+            if (mono != null)
+            {
+                mono.hp--;
+            }
+
+            Destroy(gameObject);
         }
     }
 

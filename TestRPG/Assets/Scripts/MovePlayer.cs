@@ -11,7 +11,7 @@ public class MovePlayer : MonoBehaviour {
     public float fastFlightSpeed = 2f;
     public float jumpSpeed = 2f;
 
-    public LayerMask layerMaskFloor;
+    public LayerMask groundMask;
 
     public bool grounded = false;
 
@@ -20,17 +20,17 @@ public class MovePlayer : MonoBehaviour {
     public bool isFlying = false;
     public bool isFlyingFast = false;
 
-    PlayerInput input;
+    PlayerInput _input;
 
-    Rigidbody rigidbody;
-    RaycastHit hitGround;
-    ShootArrow shootArrow;
+    Rigidbody _rigidbody;
+    RaycastHit _hitGround;
+    ShootArrow _shootArrow;
 
     void Start ()
     {
-        input = GetComponent<PlayerInput>();
-        rigidbody = GetComponent<Rigidbody>();
-        shootArrow = GetComponent<ShootArrow>();
+        _input = GetComponent<PlayerInput>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _shootArrow = GetComponent<ShootArrow>();
     }
 	
 	void Update ()
@@ -44,13 +44,13 @@ public class MovePlayer : MonoBehaviour {
     {
         if (isFlyingFast)
         {
-            if (!input.run || grounded)
+            if (!_input.run || grounded)
             {
                 ExitFastFlightMode();
             }
             else
             {
-                transform.LookAt(shootArrow.aimingPoint);
+                transform.LookAt(_shootArrow.aimingPoint);
             }
         }
         else if (isFlying)
@@ -59,24 +59,22 @@ public class MovePlayer : MonoBehaviour {
             {
                 ExitFlightMode();
             }
-            else if (input.run)
+            else if (_input.run)
             {
                 EnterFastFlightMode();
             }
         }
         else
         {
-            if (grounded && input.jump_Down)
+            if (grounded && _input.jump_Down)
             {
                 Jump();
             }
-            else if (!grounded && canFly && input.jump_Down)
+            else if (!grounded && canFly && _input.jump_Down)
             {
                 EnterFlightMode();
             }
         }
-
-        
     }
 
     private void FixedUpdate()
@@ -91,11 +89,11 @@ public class MovePlayer : MonoBehaviour {
 
             if (isFlying)
             {
-                if (input.jump)
+                if (_input.jump)
                 {
                     GoUp();
                 }
-                else if (input.goDown)
+                else if (_input.goDown)
                 {
                     GoDown();
                 }
@@ -107,15 +105,15 @@ public class MovePlayer : MonoBehaviour {
     private void EnterFlightMode()
     {
         isFlying = true;
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.useGravity = false;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.useGravity = false;
     }
 
     private void ExitFlightMode()
     {
         isFlying = false;
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.useGravity = true;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.useGravity = true;
     }
 
 
@@ -123,14 +121,14 @@ public class MovePlayer : MonoBehaviour {
     private void EnterFastFlightMode()
     {
         isFlyingFast = true;
-        shootArrow.canShoot = false;
+        _shootArrow.canShoot = false;
     }
 
     private void ExitFastFlightMode()
     {
         isFlyingFast = false;
         transform.rotation = Quaternion.Euler(Vector3.zero);
-        shootArrow.canShoot = true;
+        _shootArrow.canShoot = true;
 
         if (grounded)
         {
@@ -141,7 +139,7 @@ public class MovePlayer : MonoBehaviour {
 
     void Move()
     {
-        transform.Translate(new Vector3(input.horizontal, 0, input.vertical) * speed * Time.fixedDeltaTime);
+        transform.Translate(new Vector3(_input.horizontal, 0, _input.vertical) * speed * Time.fixedDeltaTime);
     }
 
     void FlightFast()
@@ -151,7 +149,7 @@ public class MovePlayer : MonoBehaviour {
 
     void Jump()
     {
-        rigidbody.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+        _rigidbody.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
     }
 
 
@@ -167,23 +165,15 @@ public class MovePlayer : MonoBehaviour {
 
     bool IsGrounded()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out hitGround, 0.1f, layerMaskFloor))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
+        return Physics.Raycast(transform.position, Vector3.down, out _hitGround, 0.1f, groundMask);
     }
 
     void Animate()
     {
-        animator.SetBool("Aiming", shootArrow.isAiming);
+        animator.SetBool("Aiming", _shootArrow.isAiming);
         animator.SetBool("Grounded", grounded);
         animator.SetBool("FlyingFast", isFlyingFast);
-        animator.SetFloat("Horizontal", input.horizontal);
-        animator.SetFloat("Vertical", input.vertical);
+        animator.SetFloat("Horizontal", _input.horizontal);
+        animator.SetFloat("Vertical", _input.vertical);
     }
 }
