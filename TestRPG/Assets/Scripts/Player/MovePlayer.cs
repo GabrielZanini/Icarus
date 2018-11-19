@@ -44,7 +44,7 @@ public class MovePlayer : MonoBehaviour {
     {
         if (isFlyingFast)
         {
-            if (!_input.run || grounded)
+            if (_input.run.Up || grounded)
             {
                 ExitFastFlightMode();
             }
@@ -59,18 +59,18 @@ public class MovePlayer : MonoBehaviour {
             {
                 ExitFlightMode();
             }
-            else if (_input.run)
+            else if (_input.run.Down)
             {
                 EnterFastFlightMode();
             }
         }
         else
         {
-            if (grounded && _input.jump_Down)
+            if (grounded && _input.jump.Down)
             {
                 Jump();
             }
-            else if (!grounded && canFly && _input.jump_Down)
+            else if (!grounded && canFly && _input.jump.Down)
             {
                 EnterFlightMode();
             }
@@ -89,11 +89,11 @@ public class MovePlayer : MonoBehaviour {
 
             if (isFlying)
             {
-                if (_input.jump)
+                if (_input.jump.Hold)
                 {
                     GoUp();
                 }
-                else if (_input.goDown)
+                else if (_input.goDown.Hold)
                 {
                     GoDown();
                 }
@@ -139,7 +139,7 @@ public class MovePlayer : MonoBehaviour {
 
     void Move()
     {
-        transform.Translate(new Vector3(_input.horizontal, 0, _input.vertical) * speed * Time.fixedDeltaTime);
+        transform.Translate(new Vector3(_input.horizontal.Smooth, 0, _input.vertical.Smooth) * speed * Time.fixedDeltaTime);
     }
 
     void FlightFast()
@@ -173,7 +173,7 @@ public class MovePlayer : MonoBehaviour {
         animator.SetBool("Aiming", _shootArrow.isAiming);
         animator.SetBool("Grounded", grounded);
         animator.SetBool("FlyingFast", isFlyingFast);
-        animator.SetFloat("Horizontal", _input.horizontal);
-        animator.SetFloat("Vertical", _input.vertical);
+        animator.SetFloat("Horizontal", _input.horizontal.Smooth);
+        animator.SetFloat("Vertical", _input.vertical.Smooth);
     }
 }

@@ -4,77 +4,66 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public Vector3 targetPoint;
+    [Header("Movement")]
     public float speed = 1f;
-    public bool falling = false;
+    public float speedMultiplier = 1f;
+    public float noGravityTime = 0.5f;
 
+    [Header("Impact")]
+    public Vector3 targetPoint;
+    public int damage = 5;    
+    public bool hitted = false;
+    
     Rigidbody _rigidbody;
-    bool _stop = false;
 
     void Start()
     {
-        if (falling)
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-            _rigidbody.useGravity = true;
-            _rigidbody.velocity = transform.forward * speed;
-        }
-
-        transform.LookAt(targetPoint);
+        _rigidbody = GetComponent<Rigidbody>();
+                
+        StartCoroutine(AddPhisics());
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        if (falling)
-        {
-            rotateOnFall();
-        }
-        else
-        {
-            MoveToTarget();
-        }
-    }
-
-    void rotateOnFall()
-    {
-        transform.rotation = Quaternion.LookRotation(_rigidbody.velocity); 
-    }
-
-    void MoveToTarget()
-    {
-        if ((transform.position - targetPoint).sqrMagnitude > 0.3f && !_stop)
-        {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        }
+        transform.rotation = Quaternion.LookRotation(_rigidbody.velocity);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (falling)
-        {
-            _rigidbody.useGravity = false;
-            _rigidbody.velocity = Vector3.zero;
-            falling = false;
-        }
+        _rigidbody.useGravity = false;
+        _rigidbody.velocity = Vector3.zero;
 
-        _stop = true;
+        hitted = true;
 
         if (other.tag == "Enemy")
         {
-            Monoeye mono = other.gameObject.GetComponent<Monoeye>();
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
-            if (mono != null)
+            if (enemy != null)
             {
-                mono.hp--;
+                enemy.TakeDamage(damage);
+                gameObject.transform.parent = enemy.transform;
             }
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
+    }
+
+    IEnumerator AddPhisics()
+    {
+        _rigidbody.velocity = transform.forward * speed * speedMultiplier;
+
+        yield return new WaitForSeconds(noGravityTime * speedMultiplier);
+
+        if (!hitted)
+        {
+
+        }
+        _rigidbody.useGravity = true;
     }
 
     void OnBecameInvisible()
     {
         Destroy(gameObject);
     }
-    
 }

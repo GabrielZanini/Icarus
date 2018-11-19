@@ -9,7 +9,15 @@ public class ShootArrow : MonoBehaviour {
 
     public Vector3 aimingPoint;
 
-    public float arrowSpeed = 1f;
+    public float minArrowSpeed = 1f;
+    public float maxArrowSpeed = 50f;
+    public float arrowSpeed = 0f;
+
+
+
+    public float drawTime = 2f;
+    public float drawCounter = 0f;
+
 
     public Transform archer;
     public Transform arrowSpawnner;
@@ -23,7 +31,6 @@ public class ShootArrow : MonoBehaviour {
 
 
     PlayerInput _input;
-    bool _ready = false;
     Vector3 _start;
     Vector3 _direction;
 
@@ -41,20 +48,28 @@ public class ShootArrow : MonoBehaviour {
 
         CastRay();
 
-        if (_input.aiming && canShoot)
-        {
-            isAiming = true;
-            archer.localRotation = Quaternion.Euler(0f, 90f, 0f);
 
-            if (_input.fire)
+        if (!isAiming)
+        {
+            if (_input.fire.Down && canShoot)
             {
-                Shoot();
+                isAiming = true;
+                archer.localRotation = Quaternion.Euler(0f, 90f, 0f);
+                drawCounter = 0;
             }
         }
         else
         {
-            isAiming = false;
-            archer.localRotation = Quaternion.Euler(0f, 0f, 0f);
+
+
+            if (_input.fire.Up)
+            {
+                isAiming = false;
+                archer.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                drawCounter = 0;
+
+                Shoot();
+            }
         }        
     }
 
@@ -70,19 +85,12 @@ public class ShootArrow : MonoBehaviour {
         {
             Debug.DrawRay(_start, _direction * hit.distance, Color.green);
             aimingPoint = hit.point;
-            _ready = true;
         }
         else
         {
             Debug.DrawRay(_start, _direction * 1000, Color.red);
             aimingPoint = _start + (_direction * 1000);
-            _ready = false;
         }
-    }
-
-    void Aim()
-    {
-        
     }
 
     void Shoot()
@@ -91,13 +99,7 @@ public class ShootArrow : MonoBehaviour {
         var projectile = arrow.GetComponent<Projectile>();
 
         projectile.speed = arrowSpeed;
-        projectile.targetPoint = aimingPoint;
-
-        if (!_ready)
-        {         
-            projectile.falling = true;
-        }
-
+        projectile.speed = arrowSpeed;
     }
 
     void LookAtPoint()
