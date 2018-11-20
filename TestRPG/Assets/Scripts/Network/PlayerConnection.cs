@@ -5,13 +5,23 @@ using UnityEngine.Networking;
 
 public class PlayerConnection : NetworkBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public GameObject characterPrefab;
+    
+
+    private void Start()
+    {
+        if (isLocalPlayer)
+        {
+            CmdSpawnCharacter();
+        } 
+    }
+
+
+    [Command]
+    private void CmdSpawnCharacter()
+    {
+        GameObject character = Instantiate(characterPrefab);
+
+        NetworkServer.SpawnWithClientAuthority(character, connectionToClient);
+    }
 }

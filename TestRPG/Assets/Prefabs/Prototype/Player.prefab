@@ -706,6 +706,8 @@ GameObject:
   - component: {fileID: 114942750001956144}
   - component: {fileID: 114223922050625626}
   - component: {fileID: 114404437867402600}
+  - component: {fileID: 114319538194195982}
+  - component: {fileID: 114352337150050206}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -2405,13 +2407,34 @@ MonoBehaviour:
   flightSpeed: 6
   fastFlightSpeed: 20
   jumpSpeed: 10
-  layerMaskFloor:
+  groundMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 784
   grounded: 0
   canFly: 1
   isFlying: 0
   isFlyingFast: 0
+--- !u!114 &114319538194195982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1554789830945798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.09090909
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114341003312086398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2423,14 +2446,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 298f4fd682935e247acd73c669a71709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fire: 0
-  aiming: 0
-  vertical: 0
-  horizontal: 0
-  jump: 0
-  jump_Down: 0
-  run: 0
-  goDown: 0
+--- !u!114 &114352337150050206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1554789830945798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 163
+    i1: 203
+    i2: 199
+    i3: 244
+    i4: 215
+    i5: 186
+    i6: 137
+    i7: 180
+    i8: 200
+    i9: 120
+    i10: 121
+    i11: 131
+    i12: 60
+    i13: 12
+    i14: 186
+    i15: 205
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114404437867402600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2448,7 +2495,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294966267
   aimingPoint: {x: 0, y: 0, z: 0}
-  arrowSpeed: 40
+  minArrowSpeed: 1
+  maxArrowSpeed: 50
+  arrowSpeed: 50
+  drawTime: 2
+  drawCounter: 0
   archer: {fileID: 4851965552105646}
   arrowSpawnner: {fileID: 4427015104702592}
   bow: {fileID: 4411530530743636}
@@ -2498,7 +2549,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100010, guid: 3154672ba56cdc54c9827f780bd438c1, type: 3}
+  - {fileID: 2100000, guid: 7791fd5b56c622647a6951ad98bf2cad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2699,7 +2750,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3154672ba56cdc54c9827f780bd438c1, type: 3}
+  - {fileID: 2100000, guid: 8c19a618a0bd9844583b91dca0875a34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2762,7 +2813,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100004, guid: 3154672ba56cdc54c9827f780bd438c1, type: 3}
+  - {fileID: 2100000, guid: 865b4c0d8ed34be45ba17c76a4815363, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

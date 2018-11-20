@@ -40,6 +40,9 @@ public class CopyRotation : MonoBehaviour {
 
     void UpdateRotation()
     {
+        if (target == null)
+            return;
+                
         newRotation = transform.rotation.eulerAngles;
 
         if (copyX)
