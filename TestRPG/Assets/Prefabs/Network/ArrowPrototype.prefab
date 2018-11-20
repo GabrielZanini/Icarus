@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 65020238577366300}
   - component: {fileID: 96609857659020984}
   - component: {fileID: 114282416587933706}
+  - component: {fileID: 114903117946833316}
+  - component: {fileID: 114609031470981428}
   m_Layer: 12
   m_Name: ArrowPrototype
   m_TagString: Untagged
@@ -246,8 +248,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a273384907717446929189502b96fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPoint: {x: 0, y: 0, z: 0}
   speed: 1
   speedMultiplier: 1
   noGravityTime: 0.3
+  targetPoint: {x: 0, y: 0, z: 0}
   damage: 5
+  hitted: 0
+--- !u!114 &114609031470981428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894509153684844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 0
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114903117946833316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894509153684844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 227
+    i1: 34
+    i2: 240
+    i3: 56
+    i4: 140
+    i5: 112
+    i6: 91
+    i7: 36
+    i8: 11
+    i9: 96
+    i10: 227
+    i11: 190
+    i12: 239
+    i13: 29
+    i14: 154
+    i15: 111
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

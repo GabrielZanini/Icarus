@@ -40,6 +40,8 @@ GameObject:
   - component: {fileID: 54931961595561842}
   - component: {fileID: 135192101343164750}
   - component: {fileID: 114301581469976798}
+  - component: {fileID: 114739123741722412}
+  - component: {fileID: 114992787872013356}
   m_Layer: 0
   m_Name: Monoeye
   m_TagString: Enemy
@@ -302,11 +304,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e41d378af9d5940809e86495cdafc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyeBall: {fileID: 4509844301179244}
-  hp: 3
+  heath: 2
   speed: 4
   rotationSpeed: 3
+  eyeBall: {fileID: 4509844301179244}
   target: {fileID: 0}
+--- !u!114 &114739123741722412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1492731631619668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 130
+    i1: 198
+    i2: 93
+    i3: 168
+    i4: 213
+    i5: 231
+    i6: 137
+    i7: 36
+    i8: 202
+    i9: 52
+    i10: 234
+    i11: 107
+    i12: 0
+    i13: 210
+    i14: 215
+    i15: 118
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114992787872013356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1492731631619668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!135 &135192101343164750
 SphereCollider:
   m_ObjectHideFlags: 1
