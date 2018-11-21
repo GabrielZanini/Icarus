@@ -14,7 +14,7 @@ public class PlayerInput : MonoBehaviour {
     public InputAxis horizontal;
 
 
-    void Start ()
+    void Awake ()
     {
         fire = new InputButton("Fire1");
         aiming = new InputButton("Fire2");

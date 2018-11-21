@@ -9,7 +9,19 @@ public class Monoeye : Enemy
     public Transform eyeBall;
     public Transform target;
 
-	void Update ()
+    void Start()
+    {
+        StartCoroutine(LookForTarget());
+    }
+
+    void Update ()
+    {
+        if (target != null)
+        {
+
+        }
+    }
+    void ChaseTarget()
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), rotationSpeed * Time.deltaTime);
         transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
@@ -23,9 +35,7 @@ public class Monoeye : Enemy
         eyeBall.LookAt(target);
     }
 
-    
-
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -33,4 +43,13 @@ public class Monoeye : Enemy
             SceneManager.LoadScene(loadedLevel.buildIndex);
         }
     }
+
+    IEnumerator LookForTarget()
+    {
+        while (target = null)
+        {
+            yield return null;
+        } 
+    }
+
 }

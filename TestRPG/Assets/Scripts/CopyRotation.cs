@@ -62,6 +62,11 @@ public class CopyRotation : MonoBehaviour {
 
         transform.rotation = Quaternion.Euler(newRotation);
     }
+
+    public void SetTarget(Transform newTransform)
+    {
+        target = newTransform;
+    }
 }
 
 public enum UpdateType

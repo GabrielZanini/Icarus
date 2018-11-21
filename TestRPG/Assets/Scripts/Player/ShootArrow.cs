@@ -9,16 +9,19 @@ public class ShootArrow : MonoBehaviour {
 
     public Vector3 aimingPoint;
 
+    [Header("Transforms")]
     public float minArrowSpeed = 1f;
     public float maxArrowSpeed = 50f;
     public float arrowSpeed = 0f;
 
 
-
+    [Header("Draw")]
     public float drawTime = 2f;
     public float drawCounter = 0f;
+    public float draw = 0f;
 
 
+    [Header("Transforms")]
     public Transform archer;
     public Transform arrowSpawnner;
     public Transform bow;
@@ -55,20 +58,27 @@ public class ShootArrow : MonoBehaviour {
             {
                 isAiming = true;
                 archer.localRotation = Quaternion.Euler(0f, 90f, 0f);
-                drawCounter = 0;
             }
         }
         else
         {
-
-
             if (_input.fire.Up)
             {
+                Shoot();
+
                 isAiming = false;
                 archer.localRotation = Quaternion.Euler(0f, 0f, 0f);
                 drawCounter = 0;
+                draw = 0;
+            }
+            else
+            {
+                if (drawCounter < drawTime)
+                {
+                    drawCounter += Time.deltaTime;
+                }
 
-                Shoot();
+                draw = drawCounter / drawTime;
             }
         }        
     }
@@ -98,8 +108,10 @@ public class ShootArrow : MonoBehaviour {
         var arrow = (GameObject)Instantiate(arrowPrefab, arrowSpawnner.position, arrowSpawnner.rotation);
         var projectile = arrow.GetComponent<Projectile>();
 
+        arrowSpeed = minArrowSpeed + ((maxArrowSpeed - minArrowSpeed) * draw);
+
         projectile.speed = arrowSpeed;
-        projectile.speed = arrowSpeed;
+        projectile.speedMultiplier = draw;
     }
 
     void LookAtPoint()

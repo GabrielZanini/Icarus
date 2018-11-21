@@ -13,7 +13,10 @@ public class Projectile : MonoBehaviour
     public Vector3 targetPoint;
     public int damage = 5;    
     public bool hitted = false;
-    
+
+    [Header("Shooter")]
+    public GameObject Shooter;
+
     Rigidbody _rigidbody;
 
     void Start()
@@ -25,6 +28,9 @@ public class Projectile : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (hitted)
+            return;
+
         transform.rotation = Quaternion.LookRotation(_rigidbody.velocity);
     }
 
@@ -32,6 +38,7 @@ public class Projectile : MonoBehaviour
     {
         _rigidbody.useGravity = false;
         _rigidbody.velocity = Vector3.zero;
+        _rigidbody.isKinematic = true;
 
         hitted = true;
 
@@ -57,9 +64,9 @@ public class Projectile : MonoBehaviour
 
         if (!hitted)
         {
-
+            _rigidbody.useGravity = true;
         }
-        _rigidbody.useGravity = true;
+        
     }
 
     void OnBecameInvisible()

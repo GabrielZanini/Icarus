@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 public class PlayerConnection : NetworkBehaviour {
 
     public GameObject characterPrefab;
-    public GameObject cameraPrefab;
 
     private void Start()
     {
