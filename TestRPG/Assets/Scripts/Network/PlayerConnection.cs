@@ -26,5 +26,7 @@ public class PlayerConnection : NetworkBehaviour {
         GameObject character = Instantiate(characterPrefab);
 
         NetworkServer.SpawnWithClientAuthority(character, connectionToClient);
+
+        ServerManager.Instance.PlayerCharacters.Add(character);
     }
 }

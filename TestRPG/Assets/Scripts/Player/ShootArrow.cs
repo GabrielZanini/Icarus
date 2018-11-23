@@ -10,8 +10,7 @@ public class ShootArrow : MonoBehaviour {
     public Vector3 aimingPoint;
 
     [Header("Transforms")]
-    public float minArrowSpeed = 1f;
-    public float maxArrowSpeed = 50f;
+
     public float arrowSpeed = 0f;
 
 
@@ -108,10 +107,7 @@ public class ShootArrow : MonoBehaviour {
         var arrow = (GameObject)Instantiate(arrowPrefab, arrowSpawnner.position, arrowSpawnner.rotation);
         var projectile = arrow.GetComponent<Projectile>();
 
-        arrowSpeed = minArrowSpeed + ((maxArrowSpeed - minArrowSpeed) * draw);
-
-        projectile.speed = arrowSpeed;
-        projectile.speedMultiplier = draw;
+        projectile.multiplier = draw;
     }
 
     void LookAtPoint()

@@ -2403,7 +2403,7 @@ Animator:
   m_GameObject: {fileID: 1554789830945798}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 217136902ba4e364699a644e442554ff, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2528,10 +2528,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294966267
   aimingPoint: {x: 0, y: 0, z: 0}
-  minArrowSpeed: 1
+  minArrowSpeed: 30
   maxArrowSpeed: 50
   arrowSpeed: 50
-  drawTime: 2
+  drawTime: 1
   drawCounter: 0
   draw: 0
   archer: {fileID: 4851965552105646}

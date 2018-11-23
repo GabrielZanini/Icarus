@@ -5,9 +5,12 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [Header("Movement")]
-    public float speed = 1f;
-    public float speedMultiplier = 1f;
-    public float noGravityTime = 0.5f;
+    public float minSpeed = 1f;
+    public float maxSpeed = 50f;
+
+    [Header("Gravity")]
+    public float minNoGravityTime = 0.1f;
+    public float maxNoGravityTime = 0.5f;
 
     [Header("Impact")]
     public Vector3 targetPoint;
@@ -16,6 +19,7 @@ public class Projectile : MonoBehaviour
 
     [Header("Shooter")]
     public GameObject Shooter;
+    public float multiplier = 1f;
 
     Rigidbody _rigidbody;
 
@@ -58,9 +62,12 @@ public class Projectile : MonoBehaviour
 
     IEnumerator AddPhisics()
     {
-        _rigidbody.velocity = transform.forward * speed * speedMultiplier;
+        float speed = minSpeed + ((maxSpeed - minSpeed) * multiplier);
+        float noGravityTime = minNoGravityTime + ((maxNoGravityTime - minNoGravityTime) * multiplier);
 
-        yield return new WaitForSeconds(noGravityTime * speedMultiplier);
+        _rigidbody.velocity = transform.forward * speed;
+
+        yield return new WaitForSeconds(noGravityTime);
 
         if (!hitted)
         {

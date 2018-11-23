@@ -304,11 +304,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e41d378af9d5940809e86495cdafc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHeath: 5
   heath: 2
   speed: 4
   rotationSpeed: 3
   eyeBall: {fileID: 4509844301179244}
   target: {fileID: 0}
+  deathEffect: {fileID: 0}
 --- !u!114 &114739123741722412
 MonoBehaviour:
   m_ObjectHideFlags: 1
