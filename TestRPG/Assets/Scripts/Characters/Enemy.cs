@@ -2,20 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Character
+public class Enemy : BaseCharacter
 {
-    public int maxHeath = 5;
-    public int heath = 2;
-
-    public float speed = 2f;
-    public float rotationSpeed = 2f;
-
-
-
-    public virtual void TakeDamage(int damage)
-    {
-        heath -= damage;
-    }
+    public Transform target;
+    public int scorePoints = 10;
+    public GameObject deathEffect;
 
     public virtual void Respawn(Vector3 respawnPoint)
     {

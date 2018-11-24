@@ -248,12 +248,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a273384907717446929189502b96fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  speedMultiplier: 1
-  noGravityTime: 0.3
+  minSpeed: 30
+  maxSpeed: 50
+  minNoGravityTime: 0
+  maxNoGravityTime: 0.5
   targetPoint: {x: 0, y: 0, z: 0}
   damage: 5
   hitted: 0
+  Shooter: {fileID: 0}
+  multiplier: 1
 --- !u!114 &114609031470981428
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -7,10 +7,7 @@ public class Monoeye : Enemy
 {
 
     public Transform eyeBall;
-    public Transform target;
-
-    public GameObject deathEffect;
-    
+        
     void Start()
     {
         StartCoroutine(LookForTarget());

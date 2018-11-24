@@ -243,8 +243,8 @@ MonoBehaviour:
   m_MoveSpeed: 20
   m_TurnSpeed: 2
   m_TurnSmoothing: 0
-  m_TiltMax: 90
-  m_TiltMin: 30
+  m_TiltMax: 75
+  m_TiltMin: 60
   m_LockCursor: 1
   m_VerticalAutoReturn: 0
 --- !u!114 &114371507971355126
