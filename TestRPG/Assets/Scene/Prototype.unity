@@ -305,7 +305,8 @@ MonoBehaviour:
   m_OnlineScene: 
   m_SpawnPrefabs:
   - {fileID: 1554789830945798, guid: a3cbc7f4d7ba89b4c87879833c0cbacd, type: 2}
-  - {fileID: 0}
+  - {fileID: 1894509153684844, guid: e322f0388c705b240b60e3beef1d9a6f, type: 2}
+  - {fileID: 1492731631619668, guid: 82c65da8d5e78924ca34ea6b00d2d776, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -436,6 +437,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ecbe9009c08f844bf0821fb0a27582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHeath: 5
+  heath: 2
+  speed: 2
+  rotationSpeed: 2
 --- !u!1001 &196980614
 Prefab:
   m_ObjectHideFlags: 0

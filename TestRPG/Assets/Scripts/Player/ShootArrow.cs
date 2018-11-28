@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ShootArrow : MonoBehaviour {
+public class ShootArrow : NetworkBehaviour {
 
     public GameObject arrowPrefab;
     public LayerMask layerMask;
@@ -35,18 +36,20 @@ public class ShootArrow : MonoBehaviour {
     PlayerInput _input;
     Vector3 _start;
     Vector3 _direction;
+    Transform _cameraTranform;
 
     RaycastHit hit;
 
     private void Start()
     {
         _input = GetComponent<PlayerInput>();
+        _cameraTranform = Camera.main.transform;
     }
 
     void Update ()
     {
-        _start = Camera.main.transform.position;
-        _direction = Camera.main.transform.forward;
+        _start = _cameraTranform.position;
+        _direction = _cameraTranform.forward;
 
         CastRay();
 
@@ -55,20 +58,23 @@ public class ShootArrow : MonoBehaviour {
         {
             if (_input.fire.Down && canShoot)
             {
-                isAiming = true;
-                archer.localRotation = Quaternion.Euler(0f, 90f, 0f);
+                StartDrawing();
             }
         }
         else
         {
             if (_input.fire.Up)
             {
-                Shoot();
+                //Shoot();
 
-                isAiming = false;
-                archer.localRotation = Quaternion.Euler(0f, 0f, 0f);
-                drawCounter = 0;
-                draw = 0;
+                CmdUpdateBow(bow.rotation);
+                CmdShoot(draw);
+
+                StopDrawing();
+            }
+            else if (_input.run.Down)
+            {
+                StopDrawing();
             }
             else
             {
@@ -80,6 +86,15 @@ public class ShootArrow : MonoBehaviour {
                 draw = drawCounter / drawTime;
             }
         }        
+
+    }
+
+    void FixedUpdate()
+    {
+        if (hasAuthority)
+        {
+            CmdUpdateBow(bow.rotation);
+        }
     }
 
     void LateUpdate()
@@ -87,7 +102,7 @@ public class ShootArrow : MonoBehaviour {
         LookAtPoint();
     }
     
-
+        
     void CastRay()
     {
         if (Physics.Raycast(_start, _direction, out hit, Mathf.Infinity, layerMask))
@@ -102,6 +117,20 @@ public class ShootArrow : MonoBehaviour {
         }
     }
 
+    void StartDrawing()
+    {
+        isAiming = true;
+        archer.localRotation = Quaternion.Euler(0f, 90f, 0f);
+    }
+
+    void StopDrawing()
+    {
+        isAiming = false;
+        archer.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        drawCounter = 0;
+        draw = 0;
+    }
+
     void Shoot()
     {
         var arrow = (GameObject)Instantiate(arrowPrefab, arrowSpawnner.position, arrowSpawnner.rotation);
@@ -110,11 +139,27 @@ public class ShootArrow : MonoBehaviour {
         projectile.multiplier = draw;
     }
 
+    [Command]
+    void CmdShoot(float draw)
+    {
+        GameObject arrow = Instantiate(arrowPrefab, arrowSpawnner.position, arrowSpawnner.rotation);
+        var projectile = arrow.GetComponent<Projectile>();
+        projectile.multiplier = draw;
+        
+        NetworkServer.Spawn(arrow);        
+    }
+
     void LookAtPoint()
     {
         if (changeRotation)
         {
             bow.LookAt(aimingPoint);
         }
+    }
+
+    [Command]
+    void CmdUpdateBow(Quaternion newRotation)
+    {
+        bow.rotation = newRotation;
     }
 }

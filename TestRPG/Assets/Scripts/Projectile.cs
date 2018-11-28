@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Projectile : MonoBehaviour
+public class Projectile : NetworkBehaviour
 {
     [Header("Movement")]
     public float minSpeed = 1f;
@@ -25,21 +26,26 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
+        if (!isServer)
+            return;
+
         _rigidbody = GetComponent<Rigidbody>();
-                
         StartCoroutine(AddPhisics());
     }
 
     private void FixedUpdate()
     {
-        if (hitted)
+        if (!isServer || hitted)
             return;
-
+        
         transform.rotation = Quaternion.LookRotation(_rigidbody.velocity);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isServer)
+            return;
+
         _rigidbody.useGravity = false;
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.isKinematic = true;
@@ -78,6 +84,6 @@ public class Projectile : MonoBehaviour
 
     void OnBecameInvisible()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

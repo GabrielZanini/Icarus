@@ -8,11 +8,27 @@ public class PlayerCharacterSetup : NetworkBehaviour {
     
     public GameObject cameraPrefab;
 
-
     void Start ()
     {
-        StartCoroutine(StartCharacter());
+        StartCoroutine(StartCharacter());        
 	}
+
+    
+    void OnEnable()
+    {
+        if (isServer)
+        {
+            ServerManager.Instance.PlayerCharacters.Add(gameObject);
+        }
+    }
+
+    void OnDisable()
+    {
+        if (isServer)
+        {
+            ServerManager.Instance.PlayerCharacters.Remove(gameObject);
+        }
+    }
 
     void EnableScripts()
     {
@@ -36,14 +52,12 @@ public class PlayerCharacterSetup : NetworkBehaviour {
 
         if (hasAuthority)
         {
-            gameObject.name = "PlayerCharacter_Local";
-
             EnableScripts();
             SpawnCamera();
         }
-        else
-        {
-            gameObject.name = "PlayerCharacter_Other";
-        }
+
+        gameObject.name = "PlayerCharacter";
+        gameObject.name += hasAuthority ? "_LocalAuthority" : "_Other";
+        gameObject.name += isServer ? "_Server" : "_Client";
     }
 }

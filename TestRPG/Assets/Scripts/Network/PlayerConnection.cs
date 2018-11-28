@@ -27,6 +27,6 @@ public class PlayerConnection : NetworkBehaviour {
 
         NetworkServer.SpawnWithClientAuthority(character, connectionToClient);
 
-        ServerManager.Instance.PlayerCharacters.Add(character);
+        //ServerManager.Instance.PlayerCharacters.Add(character);
     }
 }
