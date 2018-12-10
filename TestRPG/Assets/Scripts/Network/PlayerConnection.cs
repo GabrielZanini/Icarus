@@ -7,6 +7,9 @@ public class PlayerConnection : NetworkBehaviour {
 
     public GameObject characterPrefab;
 
+    [SyncVar]
+    public int Score = 0;
+
     private void Start()
     {
         if (isLocalPlayer)

@@ -707,9 +707,9 @@ GameObject:
   - component: {fileID: 114341003312086398}
   - component: {fileID: 114223922050625626}
   - component: {fileID: 114404437867402600}
+  - component: {fileID: 114035389747800358}
   - component: {fileID: 114319538194195982}
   - component: {fileID: 114352337150050206}
-  - component: {fileID: 114593670403665504}
   - component: {fileID: 114229096131362002}
   m_Layer: 10
   m_Name: PlayerCharacter
@@ -2411,6 +2411,24 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114035389747800358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1554789830945798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c596c73d2bd70fa4d868e19c59c0823a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 95672595573503516}
+  updateRate: 0.5
+  isAiming: 0
+  isGrounded: 0
+  isFlyingFast: 0
+  horizontal: 0
+  vertical: 0
 --- !u!114 &114223922050625626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2422,7 +2440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c449f3e8315903d49aacf3f09b2b40f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 95672595573503516}
   speed: 8
   flightSpeed: 6
   fastFlightSpeed: 20
@@ -2528,8 +2545,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294966267
   aimingPoint: {x: 0, y: 0, z: 0}
-  minArrowSpeed: 30
-  maxArrowSpeed: 50
   arrowSpeed: 50
   drawTime: 1
   drawCounter: 0
@@ -2540,25 +2555,6 @@ MonoBehaviour:
   canShoot: 1
   isAiming: 0
   changeRotation: 1
---- !u!114 &114593670403665504
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1554789830945798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Animator: {fileID: 95889393492448738}
-  m_ParameterSendBits: 0
-  param0: 
-  param1: 
-  param2: 
-  param3: 
-  param4: 
-  param5: 
 --- !u!114 &114942750001956144
 MonoBehaviour:
   m_ObjectHideFlags: 1

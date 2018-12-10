@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MovePlayer : MonoBehaviour {
 
-    public Animator animator;
 
     public float speed = 2f;
     public float flightSpeed = 2f;
@@ -21,7 +20,7 @@ public class MovePlayer : MonoBehaviour {
     public bool isFlyingFast = false;
 
     PlayerInput _input;
-
+    SyncAnimation _syncAnimation;
     Rigidbody _rigidbody;
     RaycastHit _hitGround;
     ShootArrow _shootArrow;
@@ -29,6 +28,7 @@ public class MovePlayer : MonoBehaviour {
     void Start ()
     {
         _input = GetComponent<PlayerInput>();
+        _syncAnimation = GetComponent<SyncAnimation>();
         _rigidbody = GetComponent<Rigidbody>();
         _shootArrow = GetComponent<ShootArrow>();
     }
@@ -170,10 +170,10 @@ public class MovePlayer : MonoBehaviour {
 
     void Animate()
     {
-        animator.SetBool("Aiming", _shootArrow.isAiming);
-        animator.SetBool("Grounded", grounded);
-        animator.SetBool("FlyingFast", isFlyingFast);
-        animator.SetFloat("Horizontal", _input.horizontal.Smooth);
-        animator.SetFloat("Vertical", _input.vertical.Smooth);
+        _syncAnimation.isAiming = _shootArrow.isAiming;
+        _syncAnimation.isGrounded = grounded;
+        _syncAnimation.isFlyingFast = isFlyingFast;
+        _syncAnimation.horizontal = _input.horizontal.Smooth;
+        _syncAnimation.vertical = _input.vertical.Smooth;
     }
 }
