@@ -4,9 +4,15 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityStandardAssets.Cameras;
 
-public class PlayerCharacterSetup : NetworkBehaviour {
+public class PlayerCharacter : NetworkBehaviour {
     
     public GameObject cameraPrefab;
+    public PlayerConnection connection;
+
+    [SyncVar]
+    public int score = 0;
+
+    GameObject camera;
 
     void Start ()
     {
@@ -16,17 +22,14 @@ public class PlayerCharacterSetup : NetworkBehaviour {
     
     void OnEnable()
     {
-        if (isServer)
-        {
-            ServerManager.Instance.PlayerCharacters.Add(gameObject);
-        }
+
     }
 
     void OnDisable()
     {
-        if (isServer)
+        if (camera != null)
         {
-            ServerManager.Instance.PlayerCharacters.Remove(gameObject);
+            Destroy(camera);
         }
     }
 
@@ -40,7 +43,7 @@ public class PlayerCharacterSetup : NetworkBehaviour {
 
     void SpawnCamera()
     {
-        var camera = Instantiate(cameraPrefab, transform.position, transform.rotation);
+        camera = Instantiate(cameraPrefab, transform.position, transform.rotation);
 
         camera.GetComponent<FreeLookCam>().SetTarget(transform);
         GetComponent<CopyRotation>().SetTarget(camera.transform);
@@ -59,5 +62,10 @@ public class PlayerCharacterSetup : NetworkBehaviour {
         gameObject.name = "PlayerCharacter";
         gameObject.name += hasAuthority ? "_LocalAuthority" : "_Other";
         gameObject.name += isServer ? "_Server" : "_Client";
+    }
+
+    public void AddScore(int points)
+    {
+        score += points;
     }
 }

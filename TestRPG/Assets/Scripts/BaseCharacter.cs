@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BaseCharacter : MonoBehaviour
+
+public class BaseCharacter : NetworkBehaviour
 {
     public int maxHeath = 5;
     public int heath = 2;

@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class SyncAnimation : NetworkBehaviour
-{   
-    public Animator animator;
+{
+    public Animator animObject;
+    public Animator animArcher;
+
     public float updateRate = 1.0f;
     
     [SyncVar]
@@ -38,12 +40,15 @@ public class SyncAnimation : NetworkBehaviour
 
     void Animate()
     {
-        animator.SetBool("Aiming", isAiming);
-        animator.SetBool("Grounded", isGrounded);
-        animator.SetBool("FlyingFast", isFlyingFast);
+        animObject.SetBool("Aiming", isAiming);
 
-        animator.SetFloat("Horizontal", horizontal);
-        animator.SetFloat("Vertical", vertical);
+
+        animArcher.SetBool("Aiming", isAiming);
+        animArcher.SetBool("Grounded", isGrounded);
+        animArcher.SetBool("FlyingFast", isFlyingFast);
+
+        animArcher.SetFloat("Horizontal", horizontal);
+        animArcher.SetFloat("Vertical", vertical);
     }
 
     IEnumerator UpdateServer()

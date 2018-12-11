@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Monoeye : Enemy
 {
-
     public Transform eyeBall;
         
     void Start()
     {
+        if (!isServer)
+            return;
+
         StartCoroutine(LookForTarget());
     }
 
@@ -50,8 +52,6 @@ public class Monoeye : Enemy
     {
         while (true)
         {
-
-
             yield return null;
 
             var players = ServerManager.Instance.PlayerCharacters;
@@ -61,7 +61,7 @@ public class Monoeye : Enemy
                 continue;
             }
 
-            GameObject closest = null;
+            Transform closest = null;
             Vector3 offset = Vector3.zero;
             float closestSqrMagnitude = 0f;
 
@@ -71,14 +71,14 @@ public class Monoeye : Enemy
 
                 if (i == 0)
                 {
-                    closest = players[i];
+                    closest = players[i].transform;
                     closestSqrMagnitude = offset.sqrMagnitude;
                 }
                 else
                 {
                     if (offset.sqrMagnitude < closestSqrMagnitude)
                     {
-                        closest = players[i];
+                        closest = players[i].transform;
                         closestSqrMagnitude = offset.sqrMagnitude;
                     }
                 }
@@ -86,7 +86,7 @@ public class Monoeye : Enemy
 
             if (closest != null)
             {
-                target = closest.transform;
+                target = closest;
             }
         }
     }

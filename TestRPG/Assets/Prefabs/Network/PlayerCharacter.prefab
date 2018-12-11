@@ -703,14 +703,14 @@ GameObject:
   - component: {fileID: 95889393492448738}
   - component: {fileID: 54904016878035668}
   - component: {fileID: 136779890968534996}
+  - component: {fileID: 114229096131362002}
   - component: {fileID: 114942750001956144}
   - component: {fileID: 114341003312086398}
   - component: {fileID: 114223922050625626}
   - component: {fileID: 114404437867402600}
   - component: {fileID: 114035389747800358}
-  - component: {fileID: 114319538194195982}
   - component: {fileID: 114352337150050206}
-  - component: {fileID: 114229096131362002}
+  - component: {fileID: 114319538194195982}
   m_Layer: 10
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -2371,11 +2371,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!95 &95672595573503516
 Animator:
@@ -2422,7 +2422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c596c73d2bd70fa4d868e19c59c0823a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 95672595573503516}
+  animObject: {fileID: 95889393492448738}
+  animArcher: {fileID: 95672595573503516}
   updateRate: 0.5
   isAiming: 0
   isGrounded: 0
@@ -2464,6 +2465,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraPrefab: {fileID: 1172827901434656, guid: 3bff26604f11c2344a2352d4bb6f43d8,
     type: 2}
+  connection: {fileID: 0}
+  score: 0
 --- !u!114 &114319538194195982
 MonoBehaviour:
   m_ObjectHideFlags: 1

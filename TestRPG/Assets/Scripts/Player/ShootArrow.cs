@@ -32,7 +32,7 @@ public class ShootArrow : NetworkBehaviour {
     public bool isAiming = false;
     public bool changeRotation = false;
 
-
+    PlayerCharacter _character;
     PlayerInput _input;
     Vector3 _start;
     Vector3 _direction;
@@ -42,6 +42,7 @@ public class ShootArrow : NetworkBehaviour {
 
     private void Start()
     {
+        _character = GetComponent<PlayerCharacter>();
         _input = GetComponent<PlayerInput>();
         _cameraTranform = Camera.main.transform;
     }
@@ -120,13 +121,11 @@ public class ShootArrow : NetworkBehaviour {
     void StartDrawing()
     {
         isAiming = true;
-        archer.localRotation = Quaternion.Euler(0f, 90f, 0f);
     }
 
     void StopDrawing()
     {
         isAiming = false;
-        archer.localRotation = Quaternion.Euler(0f, 0f, 0f);
         drawCounter = 0;
         draw = 0;
     }
@@ -145,7 +144,8 @@ public class ShootArrow : NetworkBehaviour {
         GameObject arrow = Instantiate(arrowPrefab, arrowSpawnner.position, arrowSpawnner.rotation);
         var projectile = arrow.GetComponent<Projectile>();
         projectile.multiplier = draw;
-        
+        projectile.shooter = _character;
+
         NetworkServer.Spawn(arrow);        
     }
 

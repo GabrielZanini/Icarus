@@ -6,6 +6,10 @@ using UnityEngine.Networking;
 public class PlayerConnection : NetworkBehaviour {
 
     public GameObject characterPrefab;
+    public PlayerCharacter character;
+
+    [SyncVar]
+    public Transform spawnpoint;
 
     [SyncVar]
     public int Score = 0;
@@ -26,10 +30,31 @@ public class PlayerConnection : NetworkBehaviour {
     [Command]
     private void CmdSpawnCharacter()
     {
-        GameObject character = Instantiate(characterPrefab);
+        spawnpoint = ServerManager.Instance.AddPlayer(this);
+        
+        GameObject newCharacter = Instantiate(characterPrefab, spawnpoint.position, spawnpoint.rotation);
 
-        NetworkServer.SpawnWithClientAuthority(character, connectionToClient);
+        NetworkServer.SpawnWithClientAuthority(newCharacter, connectionToClient);
 
-        //ServerManager.Instance.PlayerCharacters.Add(character);
+        character = newCharacter.GetComponent<PlayerCharacter>();
+        character.connection = this;
+
+        ServerManager.Instance.UpdateCharactersList();
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log(gameObject.name + ": OnEnable");
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log(gameObject.name + ": OnDisable");
+        ServerManager.Instance.RemovePlayer(this);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log(gameObject.name + ": OnDestroy");
     }
 }

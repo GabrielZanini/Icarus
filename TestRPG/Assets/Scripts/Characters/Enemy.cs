@@ -19,4 +19,10 @@ public class Enemy : BaseCharacter
         transform.position = newPosition;
     }
 
+    public virtual void TakeDamage(int damage, PlayerCharacter hitter)
+    {
+        heath -= damage;
+
+        hitter.AddScore(scorePoints);
+    }
 }

@@ -19,7 +19,7 @@ public class Projectile : NetworkBehaviour
     public bool hitted = false;
 
     [Header("Shooter")]
-    public GameObject Shooter;
+    public PlayerCharacter shooter;
     public float multiplier = 1f;
 
     Rigidbody _rigidbody;
@@ -58,7 +58,7 @@ public class Projectile : NetworkBehaviour
 
             if (enemy != null)
             {
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(damage, shooter);
                 gameObject.transform.parent = enemy.transform;
             }
 

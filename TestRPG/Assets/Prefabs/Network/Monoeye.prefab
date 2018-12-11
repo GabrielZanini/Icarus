@@ -308,9 +308,10 @@ MonoBehaviour:
   heath: 2
   speed: 4
   rotationSpeed: 3
-  eyeBall: {fileID: 4509844301179244}
   target: {fileID: 0}
+  scorePoints: 10
   deathEffect: {fileID: 0}
+  eyeBall: {fileID: 4509844301179244}
 --- !u!114 &114739123741722412
 MonoBehaviour:
   m_ObjectHideFlags: 1
