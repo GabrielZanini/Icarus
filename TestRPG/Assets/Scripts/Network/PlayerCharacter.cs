@@ -6,13 +6,12 @@ using UnityStandardAssets.Cameras;
 
 public class PlayerCharacter : NetworkBehaviour {
     
-    public GameObject cameraPrefab;
     public PlayerConnection connection;
 
     [SyncVar]
     public int score = 0;
 
-    GameObject camera;
+    public GameObject camera;
 
     void Start ()
     {
@@ -33,7 +32,7 @@ public class PlayerCharacter : NetworkBehaviour {
         }
     }
 
-    void EnableScripts()
+    void EnableLocalScripts()
     {
         GetComponent<CopyRotation>().enabled = true;
         GetComponent<PlayerInput>().enabled = true;
@@ -41,23 +40,22 @@ public class PlayerCharacter : NetworkBehaviour {
         GetComponent<ShootArrow>().enabled = true;
     }
 
-    void SpawnCamera()
+    void EnableScripts()
     {
-        camera = Instantiate(cameraPrefab, transform.position, transform.rotation);
-
-        camera.GetComponent<FreeLookCam>().SetTarget(transform);
-        GetComponent<CopyRotation>().SetTarget(camera.transform);
+        GetComponent<ShootArrow>().enabled = true;
     }
-
+    
     IEnumerator StartCharacter()
     {
         yield return null;
 
         if (hasAuthority)
         {
-            EnableScripts();
-            SpawnCamera();
+            EnableLocalScripts();
+            camera.SetActive(true);
         }
+
+        //EnableScripts();
 
         gameObject.name = "PlayerCharacter";
         gameObject.name += hasAuthority ? "_LocalAuthority" : "_Other";

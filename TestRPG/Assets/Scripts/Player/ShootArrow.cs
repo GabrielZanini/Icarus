@@ -32,7 +32,7 @@ public class ShootArrow : NetworkBehaviour {
     public bool isAiming = false;
     public bool changeRotation = false;
 
-    PlayerCharacter _character;
+    public PlayerCharacter character;
     PlayerInput _input;
     Vector3 _start;
     Vector3 _direction;
@@ -40,15 +40,27 @@ public class ShootArrow : NetworkBehaviour {
 
     RaycastHit hit;
 
+    private void Awake()
+    {
+        character = GetComponent<PlayerCharacter>();
+    }
+
     private void Start()
     {
-        _character = GetComponent<PlayerCharacter>();
+        if (!localPlayerAuthority)
+            return;
+
         _input = GetComponent<PlayerInput>();
         _cameraTranform = Camera.main.transform;
     }
 
     void Update ()
     {
+        if (!localPlayerAuthority)
+            return;
+
+        // Local Player
+
         _start = _cameraTranform.position;
         _direction = _cameraTranform.forward;
 
@@ -69,7 +81,7 @@ public class ShootArrow : NetworkBehaviour {
                 //Shoot();
 
                 CmdUpdateBow(bow.rotation);
-                CmdShoot(draw);
+                CmdShoot(draw, arrowSpawnner.position, arrowSpawnner.rotation);
 
                 StopDrawing();
             }
@@ -117,7 +129,7 @@ public class ShootArrow : NetworkBehaviour {
             aimingPoint = _start + (_direction * 1000);
         }
     }
-
+    
     void StartDrawing()
     {
         isAiming = true;
@@ -139,12 +151,12 @@ public class ShootArrow : NetworkBehaviour {
     }
 
     [Command]
-    void CmdShoot(float draw)
+    void CmdShoot(float draw, Vector3 arrowPosition, Quaternion arrowRotation)
     {
-        GameObject arrow = Instantiate(arrowPrefab, arrowSpawnner.position, arrowSpawnner.rotation);
+        GameObject arrow = Instantiate(arrowPrefab, arrowPosition, arrowRotation);
         var projectile = arrow.GetComponent<Projectile>();
         projectile.multiplier = draw;
-        projectile.shooter = _character;
+        projectile.shooter = character;
 
         NetworkServer.Spawn(arrow);        
     }

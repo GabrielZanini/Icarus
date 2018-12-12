@@ -26,6 +26,22 @@ public class PlayerConnection : NetworkBehaviour {
         }
     }
 
+    private void OnEnable()
+    {
+        Debug.Log(gameObject.name + ": OnEnable");
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log(gameObject.name + ": OnDisable");
+        ServerManager.Instance.RemovePlayer(this);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log(gameObject.name + ": OnDestroy");
+    }
+
 
     [Command]
     private void CmdSpawnCharacter()
@@ -42,19 +58,5 @@ public class PlayerConnection : NetworkBehaviour {
         ServerManager.Instance.UpdateCharactersList();
     }
 
-    private void OnEnable()
-    {
-        Debug.Log(gameObject.name + ": OnEnable");
-    }
 
-    private void OnDisable()
-    {
-        Debug.Log(gameObject.name + ": OnDisable");
-        ServerManager.Instance.RemovePlayer(this);
-    }
-
-    private void OnDestroy()
-    {
-        Debug.Log(gameObject.name + ": OnDestroy");
-    }
 }

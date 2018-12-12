@@ -27,7 +27,7 @@ public class Projectile : NetworkBehaviour
     void Start()
     {
         if (!isServer)
-            return;
+            Destroy(this);
 
         _rigidbody = GetComponent<Rigidbody>();
         StartCoroutine(AddPhisics());
@@ -61,9 +61,10 @@ public class Projectile : NetworkBehaviour
                 enemy.TakeDamage(damage, shooter);
                 gameObject.transform.parent = enemy.transform;
             }
-
-            //Destroy(gameObject);
         }
+
+        Destroy(gameObject, 5f);
+        Destroy(this);
     }
 
     IEnumerator AddPhisics()

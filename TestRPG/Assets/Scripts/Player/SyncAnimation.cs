@@ -55,8 +55,6 @@ public class SyncAnimation : NetworkBehaviour
     {
         while (true)
         {
-            Debug.Log("UpdateServer");
-
             CmdSetAiming(isAiming);
             CmdSetGrounded(isGrounded);
             CmdSetFlyingFast(isFlyingFast);
