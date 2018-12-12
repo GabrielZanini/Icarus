@@ -46,8 +46,19 @@ public class PlayerConnection : NetworkBehaviour {
     [Command]
     private void CmdSpawnCharacter()
     {
-        spawnpoint = ServerManager.Instance.AddPlayer(this);
+        StartCoroutine(SpawnCharacter());
+    }
+
+
+    IEnumerator SpawnCharacter()
+    {
+        while (!connectionToClient.isReady)
+        {
+            yield return null;
+        }
         
+        spawnpoint = ServerManager.Instance.AddPlayer(this);
+
         GameObject newCharacter = Instantiate(characterPrefab, spawnpoint.position, spawnpoint.rotation);
 
         NetworkServer.SpawnWithClientAuthority(newCharacter, connectionToClient);
@@ -57,6 +68,5 @@ public class PlayerConnection : NetworkBehaviour {
 
         ServerManager.Instance.UpdateCharactersList();
     }
-
 
 }
