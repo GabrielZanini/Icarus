@@ -67,6 +67,53 @@ public class ServerManager : NetworkBehaviour
     {
         maxPlayers = PlayersCount;
     }
+
+    
+    public void GetResults()
+    {
+        int biggerScore = 0;
+        bool draw = false;
+        
+        for (int i = 0; i < PlayerCharacters.Count; i++)
+        {
+            if (i == 0)
+            {
+                biggerScore = PlayerCharacters[i].score;
+            }
+            else
+            {
+                if (PlayerCharacters[i].score > biggerScore)
+                {
+                    biggerScore = PlayerCharacters[i].score;
+                    draw = false;
+                }
+                else if (PlayerCharacters[i].score == biggerScore)
+                {
+                    draw = true;
+                }
+            }
+
+        }
+
+        for (int i = 0; i < PlayerCharacters.Count; i++)
+        {
+            if (PlayerCharacters[i].score >= biggerScore)
+            {
+                if (draw)
+                {
+                    PlayerCharacters[i].draw = true;
+                }
+                else
+                {
+                    PlayerCharacters[i].win = true;
+                }
+            }
+            else
+            {
+                PlayerCharacters[i].lose = true;
+            }
+        }
+    }
 }
 
 

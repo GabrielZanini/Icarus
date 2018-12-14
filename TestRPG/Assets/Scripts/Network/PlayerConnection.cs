@@ -14,11 +14,14 @@ public class PlayerConnection : NetworkBehaviour {
     [SyncVar]
     public int Score = 0;
 
+
     private void Start()
     {
         if (isLocalPlayer)
         {
             CmdSpawnCharacter();
+
+            MatchManager.Instance.localPlayer = this;
         }
         else
         {
@@ -60,11 +63,6 @@ public class PlayerConnection : NetworkBehaviour {
         while (ServerManager.Instance == null)
         {
             yield return null;
-        }
-
-        if (ServerManager.Instance.IsFull)
-        {
-            NetworkManager.singleton.StopHost();
         }
 
         spawnpoint = ServerManager.Instance.AddPlayer(this);

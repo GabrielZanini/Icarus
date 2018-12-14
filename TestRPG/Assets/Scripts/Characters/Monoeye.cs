@@ -52,11 +52,11 @@ public class Monoeye : Enemy
     {
         while (true)
         {
-            yield return null;
+            yield return new WaitForSeconds(1f);
 
             var players = ServerManager.Instance.PlayerCharacters;
 
-            if (target != null || players.Count == 0)
+            if (players.Count == 0)
             {
                 continue;
             }

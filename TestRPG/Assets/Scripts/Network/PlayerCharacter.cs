@@ -10,8 +10,23 @@ public class PlayerCharacter : NetworkBehaviour {
 
     [SyncVar]
     public int score = 0;
+    [SyncVar]
+    public bool win = false;
+    [SyncVar]
+    public bool lose = false;
+    [SyncVar]
+    public bool draw = false;
 
-    public GameObject camera;
+
+
+    public PlayerInput input;
+
+    public FreeLookCam gameCamera;
+
+    private void Awake()
+    {
+        input = GetComponent<PlayerInput>();
+    }
 
     void Start ()
     {
@@ -26,9 +41,9 @@ public class PlayerCharacter : NetworkBehaviour {
 
     void OnDisable()
     {
-        if (camera != null)
+        if (gameCamera != null)
         {
-            Destroy(camera);
+            Destroy(gameCamera.gameObject);
         }
     }
 
@@ -52,8 +67,12 @@ public class PlayerCharacter : NetworkBehaviour {
         if (hasAuthority)
         {
             EnableLocalScripts();
-            camera.SetActive(true);
+
+            gameCamera.gameObject.SetActive(true);
+
+            MatchManager.Instance.localCharacter = this;
         }
+
 
         //EnableScripts();
 

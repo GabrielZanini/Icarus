@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
+
     
+
     public InputButton fire;
     public InputButton aiming;
     public InputButton jump;
@@ -13,6 +15,7 @@ public class PlayerInput : MonoBehaviour {
     public InputAxis vertical;
     public InputAxis horizontal;
 
+    public static bool canRead = false;
 
     void Awake ()
     {
@@ -25,6 +28,8 @@ public class PlayerInput : MonoBehaviour {
         vertical = new InputAxis("Vertical");
         horizontal = new InputAxis("Horizontal");
     }
+
+
 }
 
 public class InputButton
@@ -33,17 +38,17 @@ public class InputButton
 
     public bool Up {
         get {
-            return Input.GetButtonUp(_name);
+            return Input.GetButtonUp(_name) && PlayerInput.canRead;
         }
     }
     public bool Down {
         get {
-            return Input.GetButtonDown(_name);
+            return Input.GetButtonDown(_name) && PlayerInput.canRead;
         }
     }
     public bool Hold {
         get {
-            return Input.GetButton(_name);
+            return Input.GetButton(_name) && PlayerInput.canRead;
         }
     }
 
@@ -61,12 +66,12 @@ public class InputAxis
 
     public float Smooth {
         get {
-            return Input.GetAxis(_name);
+            return PlayerInput.canRead ? Input.GetAxis(_name) : 0f;
         }
     }
     public float Raw {
         get {
-            return Input.GetAxisRaw(_name);
+            return PlayerInput.canRead ? Input.GetAxisRaw(_name) : 0f;
         }
     }
 

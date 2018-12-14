@@ -24,6 +24,9 @@ public class GameMenuManager : MonoBehaviour {
     public GameObject startPanel;
     public GameObject startAnywayPanel;
     public GameObject exitPanel;
+    public GameObject winPanel;
+    public GameObject losePanel;
+    public GameObject drawPanel;
 
     private void Awake()
     {
@@ -45,5 +48,6 @@ public class GameMenuManager : MonoBehaviour {
     public void Continue()
     {
         exitPanel.SetActive(false);
+        MatchManager.Instance.UnLockPlayer();
     }
 }

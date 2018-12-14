@@ -10,11 +10,16 @@ public class MatchManager : NetworkBehaviour
     [SyncVar]
     public int playerCount = 0;
 
+    public PlayerConnection localPlayer;
+    public PlayerCharacter localCharacter;
+
 
     [SyncVar]
     public int duration = 120;
     [SyncVar]
     public int startCountdown = 5;
+    [SyncVar]
+    public int endCountdown = 5;
 
     [SyncVar]
     public bool isWaiting = false;
@@ -24,6 +29,8 @@ public class MatchManager : NetworkBehaviour
     public bool isPlaying = false;
     [SyncVar]
     public bool isExiting = false;
+    [SyncVar]
+    public bool isShowingResults = false;
 
     bool _inputExitDown = false;
 
@@ -63,21 +70,49 @@ public class MatchManager : NetworkBehaviour
         }
         else if (isPlaying)
         {
-            _inputExitDown = Input.GetButton("Exit");
+            _inputExitDown = Input.GetButtonDown("Exit");
 
             if (_inputExitDown && isExiting)
             {
                 GameMenuManager.Instance.exitPanel.SetActive(false);
+                UnLockPlayer();
+                isExiting = false;
             }
             else if (_inputExitDown && !isExiting)
             {
                 GameMenuManager.Instance.exitPanel.SetActive(true);
+                LockPlayer();
+                isExiting = true;
             }
 
             GameMenuManager.Instance.timer.text = duration.ToString();
         }
     }
 
+
+    public void LockPlayer()
+    {
+        PlayerInput.canRead = false;
+        LockCamera();
+    }
+
+    public void UnLockPlayer()
+    {
+        PlayerInput.canRead = true;
+        UnLockCamera();
+    }
+
+    public void LockCamera()
+    {
+        localCharacter.gameCamera.enabled = false;
+        Cursor.visible = true;
+    }
+
+    public void UnLockCamera()
+    {
+        localCharacter.gameCamera.enabled = true;
+        Cursor.visible = false;
+    }
 
 
     IEnumerator WaitForPlayers()
@@ -92,11 +127,20 @@ public class MatchManager : NetworkBehaviour
             GameMenuManager.Instance.startAnywayPanel.SetActive(true);
         }
 
+        while (localCharacter == null || localCharacter.gameCamera == null)
+        {
+            yield return null;
+        }
+
+        LockCamera();
+
         if (isServer)
         {
             while (!ServerManager.Instance.IsFull)
             {
                 yield return null;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
         else
@@ -104,6 +148,8 @@ public class MatchManager : NetworkBehaviour
             while (isWaiting)
             {
                 yield return null;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
                 
@@ -121,6 +167,7 @@ public class MatchManager : NetworkBehaviour
 
         isStarting = true;
 
+        UnLockCamera();
         GameMenuManager.Instance.startPanel.SetActive(true);
 
         if (isServer)
@@ -153,6 +200,8 @@ public class MatchManager : NetworkBehaviour
 
         isPlaying = true;
 
+        UnLockPlayer();
+
         if (isServer)
         {
             while (duration >= 0)
@@ -170,8 +219,54 @@ public class MatchManager : NetworkBehaviour
             }
         }
 
-        NetworkManager.singleton.StopHost();
+        GameMenuManager.Instance.exitPanel.SetActive(false);
+
+        LockPlayer();
+
         isPlaying = false;
+
+        yield return ShowResults();
+    }
+
+
+    IEnumerator ShowResults()
+    {
+        yield return null;
+
+        isShowingResults = true;
+
+        if (isServer)
+        {
+            ServerManager.Instance.GetResults();
+        }
+
+        while (!localCharacter.win && !localCharacter.lose && !localCharacter.draw)
+        {
+            yield return null;
+        }
+
+        if (localCharacter.win)
+        {
+            GameMenuManager.Instance.winPanel.SetActive(true);
+        }
+        else if (localCharacter.lose)
+        {
+            GameMenuManager.Instance.losePanel.SetActive(true);
+        }
+        else if (localCharacter.draw)
+        {
+            GameMenuManager.Instance.drawPanel.SetActive(true);
+        }
+
+        if (isServer)
+        {
+            endCountdown += 2;
+        }
+
+        yield return new WaitForSeconds(endCountdown);
+
+        NetworkManager.singleton.StopHost();
+        isShowingResults = false;
 
         yield return PlayMatch();
     }
