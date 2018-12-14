@@ -57,6 +57,11 @@ public class PlayerConnection : NetworkBehaviour {
             yield return null;
         }
         
+        while (ServerManager.Instance == null)
+        {
+            yield return null;
+        }
+
         spawnpoint = ServerManager.Instance.AddPlayer(this);
 
         GameObject newCharacter = Instantiate(characterPrefab, spawnpoint.position, spawnpoint.rotation);
