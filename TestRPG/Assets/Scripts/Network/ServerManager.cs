@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class ServerManager : NetworkBehaviour
-{    
+{
     public static ServerManager Instance { get; private set; }
 
     public List<Transform> PlayerSpawnpoints = new List<Transform>();
@@ -12,7 +12,16 @@ public class ServerManager : NetworkBehaviour
     public List<PlayerConnection> PlayerConnections = new List<PlayerConnection>();
     public List<PlayerCharacter> PlayerCharacters = new List<PlayerCharacter>();
 
+    public int maxPlayers = 2;
 
+
+    public int PlayersCount {
+        get { return PlayerConnections.Count; }
+    }
+
+    public bool IsFull {
+        get { return PlayerConnections.Count >= maxPlayers; }
+    }
 
 
     void Awake()
@@ -52,6 +61,11 @@ public class ServerManager : NetworkBehaviour
         {
             PlayerCharacters.Add(PlayerConnections[i].character);
         }
+    }
+
+    public void UpdateMaxPlayerCount()
+    {
+        maxPlayers = PlayersCount;
     }
 }
 

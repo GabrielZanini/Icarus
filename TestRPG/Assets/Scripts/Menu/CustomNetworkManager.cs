@@ -13,7 +13,7 @@ public class CustomNetworkManager : NetworkManager
 
     public void StartupHost()
     {
-        Debug.Log("@ " + this.name + " - StartupHost");
+        //Debug.Log("@ " + this.name + " - StartupHost");
 
         SetPort();
         NetworkManager.singleton.StartHost();
@@ -21,18 +21,17 @@ public class CustomNetworkManager : NetworkManager
 
     public void JoingGame()
     {
-        Debug.Log("@ " + this.name + " - JoingGame");
+        //Debug.Log("@ " + this.name + " - JoingGame");
 
         SetIPAddress();
         SetPort();
         NetworkManager.singleton.StartClient();
-
     }
 
 
     public void SetIPAddress()
     {
-        Debug.Log("@ " + this.name + " - SetIPAddress");
+        //Debug.Log("@ " + this.name + " - SetIPAddress");
 
         NetworkManager.singleton.networkAddress = MainMenuManager.Instance.inputAddress.text;
     }
@@ -44,7 +43,7 @@ public class CustomNetworkManager : NetworkManager
 
     private void OnLevelWasLoaded(int level)
     {
-        Debug.Log("@ " + this.name + " - OnLevelWasLoaded - " + level);
+        //Debug.Log("@ " + this.name + " - OnLevelWasLoaded - " + level);
 
         if (level == 0)
         {
@@ -58,7 +57,7 @@ public class CustomNetworkManager : NetworkManager
 
     private IEnumerator SetupMenuButtons()
     {
-        Debug.Log("@ " + this.name  + " - SetupMenuButtons");
+        //Debug.Log("@ " + this.name  + " - SetupMenuButtons");
         yield return new WaitForSeconds(0.1f);
 
         MainMenuManager.Instance.btnStartHost.onClick.RemoveAllListeners();
@@ -70,11 +69,17 @@ public class CustomNetworkManager : NetworkManager
 
     private IEnumerator SetupGameButtons()
     {
-        Debug.Log("@ " + this.name + " - SetupGameButtons");
+        //Debug.Log("@ " + this.name + " - SetupGameButtons");
         yield return new WaitForSeconds(0.1f);
 
         GameMenuManager.Instance.btnDisconnect.onClick.RemoveAllListeners();
         GameMenuManager.Instance.btnDisconnect.onClick.AddListener(NetworkManager.singleton.StopHost);
+
+        GameMenuManager.Instance.btnWaitingDisconnect.onClick.RemoveAllListeners();
+        GameMenuManager.Instance.btnWaitingDisconnect.onClick.AddListener(NetworkManager.singleton.StopHost);
+
+        GameMenuManager.Instance.btnStartMatch.onClick.RemoveAllListeners();
+        GameMenuManager.Instance.btnStartMatch.onClick.AddListener(ServerManager.Instance.UpdateMaxPlayerCount);
     }
 
 

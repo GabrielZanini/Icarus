@@ -28,18 +28,18 @@ public class PlayerConnection : NetworkBehaviour {
 
     private void OnEnable()
     {
-        Debug.Log(gameObject.name + ": OnEnable");
+        //Debug.Log(gameObject.name + ": OnEnable");
     }
 
     private void OnDisable()
     {
-        Debug.Log(gameObject.name + ": OnDisable");
+        //Debug.Log(gameObject.name + ": OnDisable");
         ServerManager.Instance.RemovePlayer(this);
     }
 
     private void OnDestroy()
     {
-        Debug.Log(gameObject.name + ": OnDestroy");
+        //Debug.Log(gameObject.name + ": OnDestroy");
     }
 
 
@@ -62,6 +62,11 @@ public class PlayerConnection : NetworkBehaviour {
             yield return null;
         }
 
+        if (ServerManager.Instance.IsFull)
+        {
+            NetworkManager.singleton.StopHost();
+        }
+
         spawnpoint = ServerManager.Instance.AddPlayer(this);
 
         GameObject newCharacter = Instantiate(characterPrefab, spawnpoint.position, spawnpoint.rotation);
@@ -73,5 +78,6 @@ public class PlayerConnection : NetworkBehaviour {
 
         ServerManager.Instance.UpdateCharactersList();
     }
+    
 
 }
